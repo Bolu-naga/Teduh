@@ -11,4 +11,8 @@ class Kos extends Model
 
     // Ini kuncinya: Membolehkan kita menyimpan data ke semua kolom
     protected $guarded = [];
+
+    public function bookings() {
+    return $this->hasMany(Booking::class);
+}
 }
