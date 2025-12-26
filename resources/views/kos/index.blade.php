@@ -64,7 +64,7 @@
                                     <button type="submit" class="btn btn-primary">Ajukan Sewa</button>
                                 </div>
                             </form>
-                            <a href="https://wa.me/{{ $kos->no_hp }}" target="_blank" class="btn btn-success btn-sm w-100 mt-1">Chat Pemilik via WA</a>
+                            <a href="https://wa.me/{{ $kos->no_hp }}?text=Halo,%20saya%20tertarik%20dengan%20kos%20{{ urlencode($kos->nama_kos) }}%20yang%20ada%20di%20InfoKos." target="_blank" class="btn btn-success btn-sm w-100 mt-1"> Chat Pemilik via WA </a>
                         @endif
 
                     @else
