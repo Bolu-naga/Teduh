@@ -9,10 +9,26 @@ class Kos extends Model
 {
     use HasFactory;
 
-    // Ini kuncinya: Membolehkan kita menyimpan data ke semua kolom
-    protected $guarded = [];
+    protected $table = 'kos'; 
+    protected $fillable = [
+        'user_id',      // Penting: ID pemilik kos
+        'nama_kos',
+        'lokasi',
+        'harga',
+        'deskripsi',
+        'no_hp',     
+        'gambar',     
+        'created_at',
+        'updated_at',
+    ];
 
-    public function bookings() {
-    return $this->hasMany(Booking::class);
-}
+    // Relasi ke User (Pemilik)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(KosImage::class, 'kos_id');
+    }
 }
