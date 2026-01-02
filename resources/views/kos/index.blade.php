@@ -31,7 +31,7 @@
     @forelse($data_kos as $kos)
     <div class="col-md-4 mb-4">
         <div class="card h-100 shadow-sm border-0">
-            
+
             {{-- LOGIKA GAMBAR --}}
             @if($kos->images->count() > 0)
             {{-- Jika ada galeri, tampilkan Carousel --}}
@@ -42,14 +42,14 @@
                     <div class="carousel-item active">
                         {{-- PERBAIKAN DI SINI: Gunakan 'images/' bukan 'storage/' --}}
                         <img src="{{ asset('images/' . $kos->gambar) }}" class="d-block w-100"
-                            style="height: 200px; object-fit: cover" alt="Cover">
+                            style="height: 400px; object-fit: cover" alt="Cover">
                     </div>
 
                     {{-- Foto Galeri (Slide Selanjutnya) --}}
                     @foreach($kos->images as $img)
                     <div class="carousel-item">
                         <img src="{{ asset('images/gallery/' . $img->image_path) }}" class="d-block w-100"
-                            style="height: 200px; object-fit: cover" alt="Galeri">
+                            style="height: 400px; object-fit: cover" alt="Galeri">
                     </div>
                     @endforeach
                 </div>
@@ -67,12 +67,13 @@
             @elseif($kos->gambar)
             {{-- Jika hanya ada foto cover saja (Tanpa Carousel) --}}
             {{-- PERBAIKAN DI SINI: Gunakan 'images/' (jamak) bukan 'image/' --}}
-            <img src="{{ asset('images/' . $kos->gambar) }}" class="card-img-top" style="height: 200px; object-fit: cover" alt="Cover">
+            <img src="{{ asset('images/' . $kos->gambar) }}" class="card-img-top"
+                style="height: 400px; object-fit: cover" alt="Cover">
 
             @else
             {{-- Jika tidak ada foto sama sekali --}}
             <div class="d-flex align-items-center justify-content-center bg-secondary text-white"
-                style="height: 200px;">
+                style="height: 400px;">
                 <span>Tidak ada foto</span>
             </div>
             @endif

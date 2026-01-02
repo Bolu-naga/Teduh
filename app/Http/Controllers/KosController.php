@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kos;
-use App\Models\KosImage;
+use App\Models\KosImage; // Pastikan Model ini di-import
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -30,14 +30,14 @@ class KosController extends Controller
     // 3. PROSES SIMPAN DATA (CREATE)
     public function store(Request $request)
     {
-        // Validasi
+        // Validasi (Sesuai kode Anda)
         $request->validate([
-            'nama_kos' => 'required',
+            'nama_kos'  => 'required',
             'lokasi'    => 'required',
-            'harga'   => 'required|numeric',
+            'harga'     => 'required|numeric',
             'deskripsi' => 'required',
-            'no_hp'    => 'required', 
-            'gambar' => 'required|image|mimes:jpeg,png,jpg', // Foto Galeri Tambahan
+            'no_hp'     => 'required', 
+            'gambar'    => 'nullable|image|mimes:jpeg,png,jpg',
         ]);
 
         $input = $request->all();
@@ -54,6 +54,7 @@ class KosController extends Controller
             $input['gambar'] = "$profileImage";
         }
 
+        // Membersihkan inputan sisa (jika ada input name='image' di form)
         unset($input['image']);
 
         $kos = Kos::create($input);
@@ -87,7 +88,7 @@ class KosController extends Controller
         return view('kos.edit', compact('kos'));
     }
 
-    // 5. PROSES UPDATE
+    // 5. PROSES UPDATE 
     public function update(Request $request, $id)
     {
         $kos = Kos::findOrFail($id);
@@ -97,19 +98,40 @@ class KosController extends Controller
             abort(403, 'Anda tidak punya hak mengedit kos ini');
         }
 
-        // 1. VALIDASI
+        // 1. VALIDASI 
         $request->validate([
-            'nama_kos' => 'required',
+            'nama_kos'  => 'required',
             'lokasi'    => 'required',
-            'harga'   => 'required|numeric',
+            'harga'     => 'required|numeric',
             'deskripsi' => 'required',
-            'no_hp'    => 'required', 
-            'gambar' => 'required|image|mimes:jpeg,png,jpg', // update
+            'no_hp'     => 'required', 
+            'gambar'    => 'nullable|image|mimes:jpeg,png,jpg', 
         ]);
 
         $input = $request->all();
 
-        // 2. LOGIKA UPDATE FOTO COVER (name='gambar')
+        // --- FITUR BARU: HAPUS FOTO GALERI YANG DICENTANG ---
+        // Logika ini menangkap checkbox dari view edit.blade.php
+        if ($request->has('delete_photos')) {
+            $photosToDeleteIds = $request->input('delete_photos');
+            
+            // Ambil data foto dari database berdasarkan ID dan pastikan milik kos ini
+            $photosToDelete = KosImage::whereIn('id', $photosToDeleteIds)
+                                        ->where('kos_id', $kos->id) 
+                                        ->get();
+
+            foreach ($photosToDelete as $photo) {
+                // 1. Hapus file fisik dari folder server
+                if (file_exists(public_path('images/gallery/' . $photo->image_path))) {
+                    unlink(public_path('images/gallery/' . $photo->image_path));
+                }
+                // 2. Hapus record dari database
+                $photo->delete();
+            }
+        }
+        // ----------------------------------------------------
+
+        // 2. LOGIKA UPDATE FOTO COVER 
         if ($image = $request->file('gambar')) {
             
             // Hapus file lama fisik jika ada
@@ -132,7 +154,7 @@ class KosController extends Controller
         // 3. PROSES UPDATE DATABASE
         $kos->update($input);
 
-        // 4. LOGIKA TAMBAH FOTO GALERI (name='photos')
+        // 4. LOGIKA TAMBAH FOTO GALERI 
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $name = date('YmdHis') . uniqid() . '.' . $photo->getClientOriginalExtension();
@@ -148,11 +170,24 @@ class KosController extends Controller
         return redirect()->route('home')->with('success', 'Data kos berhasil diperbarui');
     }
     
-    // 6. DELETE (Opsional, jika ada error delete)
+    // 6. DELETE
     public function destroy($id)
     {
         $kos = Kos::findOrFail($id);
+        
         if ($kos->user_id != Auth::id()) abort(403);
+
+        // Hapus file cover fisik
+        if ($kos->gambar && file_exists(public_path('images/' . $kos->gambar))) {
+            unlink(public_path('images/' . $kos->gambar));
+        }
+
+        foreach($kos->images as $img) {
+            if (file_exists(public_path('images/gallery/' . $img->image_path))) {
+                unlink(public_path('images/gallery/' . $img->image_path));
+            }
+        }
+
         $kos->delete();
         return redirect()->route('home')->with('success', 'Kos berhasil dihapus');
     }
