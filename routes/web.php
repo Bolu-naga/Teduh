@@ -38,8 +38,11 @@ Route::middleware('auth')->group(function () {
     // Customer: Melakukan Booking
     Route::post('/booking/{id}', [BookingController::class, 'store'])->name('booking.store');
     
-    // Customer: Lihat Pesanan Saya
+    // Customer: Lihat Pesanan Saya 
     Route::get('/pesanan-saya', [BookingController::class, 'indexSaya'])->name('my.bookings');
+
+    // Customer: Batalkan Pesanan
+    Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('booking.destroy');
     
     // Pemilik: Lihat Pesanan Masuk
     Route::get('/pesanan-masuk', [BookingController::class, 'indexMilikSaya'])->name('owner.bookings');
