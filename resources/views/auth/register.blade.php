@@ -55,5 +55,17 @@
                               placeholder="••••••••" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
     </div>
+            <!-- menambahkan pilihan role  -->
+    <div>
+            <x-input-label for="role" value="Daftar Sebagai" class="font-medium text-gray-700" />
+            <select id="role" name="role"
+                        class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 text-gray-700"
+                        required>
+                <option value="" disabled selected>Pilih peran anda...</option>
+                <option value="customer">Pencari Kos (Customer)</option>
+                <option value="pemilik">Pemilik Kos</option>
+            </select>
+                <x-input-error :messages="$errors->get('role')" class="mt-2" />
+    </div>
 </x-guest-layout>
     
