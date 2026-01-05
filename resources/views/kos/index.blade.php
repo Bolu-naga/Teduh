@@ -5,7 +5,7 @@
 <div class="row align-items-center mb-5">
     <div class="col-md-6">
         <h2 class="fw-bold text-primary mb-0">
-            <i class="bi bi-building"></i> Daftar Pilihan Kos
+            <i class="bi bi-house-door-fill"></i> Daftar Pilihan Kos
         </h2>
         <p class="text-muted mt-1">Temukan tempat tinggal nyaman impianmu disini.</p>
     </div>

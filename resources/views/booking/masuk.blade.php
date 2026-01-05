@@ -23,16 +23,16 @@
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
                     <a class="nav-link active fw-bold text-danger" href="#">
-                        Semua Masuk 
+                        Pesanan Masuk 
                         <span class="badge bg-danger rounded-pill ms-1">{{ count($pesanan) }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link text-muted" href="#">Perlu Konfirmasi</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-muted" href="#">Sudah Dihubungi</a>
-                </li>
+                </li> -->
             </ul>
         </div>
 

@@ -23,10 +23,10 @@
             <ul class="nav nav-tabs card-header-tabs" id="bookingTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active fw-bold text-primary" href="#">
-                        Semua <span class="badge bg-primary rounded-pill ms-1">{{ count($bookings) }}</span>
+                        Pesanan <span class="badge bg-primary rounded-pill ms-1">{{ count($bookings) }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link text-muted" href="#">
                         Menunggu Konfirmasi
                     </a>
@@ -40,7 +40,7 @@
                     <a class="nav-link text-muted" href="#">
                         Riwayat/Batal
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="card-body p-0">

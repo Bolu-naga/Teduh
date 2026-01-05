@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand fw-bold text-primary fs-4" href="{{ route('dashboard') }}">
-            <i class="bi bi-building-fill"></i> InfoKos
+            <i class="bi bi-house-door-fill"></i> InfoKos
         </a>
 
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -9,12 +9,8 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarContent">
+            
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-bold text-primary' : 'text-secondary' }}" href="{{ route('dashboard') }}">
-                        Dashboard
-                    </a>
-                </li>
                 
                 @auth
                     @if(Auth::user()->role == 'customer')
@@ -37,6 +33,13 @@
 
             <ul class="navbar-nav ms-auto align-items-center">
                 @auth
+                    @if(Auth::user()->role == 'pemilik')
+                    <li class="nav-item me-3 mb-2 mb-lg-0">
+                        <a class="btn btn-primary rounded-pill px-3 shadow-sm" href="{{ route('kos.create') }}">
+                            <i class="bi bi-plus-lg"></i> Sewakan Kos Saya
+                        </a>
+                    </li>
+                    @endif
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-dark fw-medium" href="#" role="button" data-bs-toggle="dropdown">
                             <span class="me-2">{{ Auth::user()->name }}</span>
