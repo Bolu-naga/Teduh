@@ -43,7 +43,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-dark fw-medium" href="#" role="button" data-bs-toggle="dropdown">
                             <span class="me-2">{{ Auth::user()->name }}</span>
-                            <span class="badge bg-light text-secondary border rounded-pill fw-normal">{{ ucfirst(Auth::user()->role) }}</span>
+                            @if(in_array(Auth::user()->role, ['admin', 'pemilik']))
+                                <span class="badge bg-danger ms-1">Pemilik</span>
+                            @else
+                                <span class="badge bg-info text-dark ms-1">Customer</span>
+                            @endif
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow mt-2">
                             <li>
