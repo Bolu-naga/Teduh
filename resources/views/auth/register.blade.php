@@ -33,5 +33,27 @@
                               placeholder="name@example.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
     </div>
+            <!-- menambahkan input password -->
+    <div>
+            <x-input-label for="password" :value="__('Password')" class="font-medium text-gray-700" />
+            <x-text-input id="password" 
+                              class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5" 
+                              type="password" 
+                              name="password" 
+                              required autocomplete="new-password" 
+                              placeholder="••••••••" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+    </div>
+
+    <div>
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="font-medium text-gray-700" />
+            <x-text-input id="password_confirmation" 
+                              class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5" 
+                              type="password" 
+                              name="password_confirmation" 
+                              required autocomplete="new-password" 
+                              placeholder="••••••••" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+    </div>
 </x-guest-layout>
     
