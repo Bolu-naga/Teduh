@@ -2,13 +2,22 @@
 
 @section('content')
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-danger"> <i class="bi bi-shop-window me-2"></i>Manajemen Pesanan
+<div class="d-flex justify-content-between align-items-center mb-4">
+    
+    {{-- BAGIAN KIRI: JUDUL & SUB-JUDUL --}}
+    <div>
+        <h2 class="fw-bold text-danger">
+            <i class="bi bi-shop-window me-2"></i>Manajemen Pesanan
         </h2>
         <div class="text-muted small">
             Pantau semua permintaan sewa kos di sini.
         </div>
     </div>
+
+    <a href="{{ url('/') }}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Kembali ke Beranda
+    </a>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
