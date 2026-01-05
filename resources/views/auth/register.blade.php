@@ -67,5 +67,18 @@
             </select>
                 <x-input-error :messages="$errors->get('role')" class="mt-2" />
     </div>
+            <!-- tomboh register dan link login -->
+    <div class="pt-2">
+            <x-primary-button class="w-full justify-center py-3 text-base font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-150 ease-in-out">
+                    {{ __('Register') }}
+            </x-primary-button>
+    </div>
+
+    <div class="text-center">
+            <span class="text-sm text-gray-600">Already have an account?</span>
+            <a class="text-sm font-medium text-indigo-600 hover:text-indigo-500 hover:underline ms-1" href="{{ route('login') }}">
+                    {{ __('Log in') }}
+            </a>
+    </div>
 </x-guest-layout>
     
