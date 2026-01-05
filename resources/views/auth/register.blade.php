@@ -9,4 +9,29 @@
             @csrf
             </form>
     </div>
+            <!-- menambahkan field nama dan email -->
+    <div>
+            <x-input-label for="name" :value="__('Name')" class="font-medium text-gray-700" />
+            <x-text-input id="name" 
+                              class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5" 
+                              type="text" 
+                              name="name" 
+                              :value="old('name')" 
+                              required autofocus autocomplete="name" 
+                              placeholder="Paul Yang" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+    </div>
+
+        <div>
+            <x-input-label for="email" :value="__('Email')" class="font-medium text-gray-700" />
+            <x-text-input id="email" 
+                              class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5" 
+                              type="email" 
+                              name="email" 
+                              :value="old('email')" 
+                              required autocomplete="username" 
+                              placeholder="name@example.com" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    </div>
 </x-guest-layout>
+    
