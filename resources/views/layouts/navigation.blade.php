@@ -11,8 +11,8 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                
                 @auth
+                    {{-- JIKA CUSTOMER --}}
                     @if(Auth::user()->role == 'customer')
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('my.bookings') ? 'active fw-bold text-primary' : 'text-secondary' }}" href="{{ route('my.bookings') }}">
@@ -21,7 +21,8 @@
                     </li>
                     @endif
 
-                    @if(Auth::user()->role == 'pemilik')
+                    {{-- JIKA PEMILIK --}}
+                    @if(in_array(Auth::user()->role, ['admin', 'pemilik']))
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('owner.bookings') ? 'active fw-bold text-primary' : 'text-secondary' }}" href="{{ route('owner.bookings') }}">
                             <i class="bi bi-inbox me-1"></i> Pesanan Masuk
@@ -33,41 +34,44 @@
 
             <ul class="navbar-nav ms-auto align-items-center">
                 @auth
+                    {{-- Tombol 'Sewakan Kos' (Khusus Pemilik) --}}
                     @if(Auth::user()->role == 'pemilik')
-                    <li class="nav-item me-3 mb-2 mb-lg-0">
+                    <li class="nav-item me-3 d-none d-lg-block">
                         <a class="btn btn-primary rounded-pill px-3 shadow-sm" href="{{ route('kos.create') }}">
                             <i class="bi bi-plus-lg"></i> Sewakan Kos Saya
                         </a>
                     </li>
                     @endif
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark fw-medium" href="#" role="button" data-bs-toggle="dropdown">
-                            <span class="text-secondary small me-1">Hai,</span>
-                            <span class="me-2 fw-bold text-dark">{{ Auth::user()->name }}</span>
-                            @if(in_array(Auth::user()->role, ['admin', 'pemilik']))
-                                <span class="badge bg-danger ms-1">Pemilik</span>
-                            @else
-                                <span class="badge bg-info text-dark ms-1">Customer</span>
-                            @endif
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow mt-2">
-                            <li>
-                                <a class="dropdown-item py-2" href="{{ route('profile.edit') }}">
-                                    <i class="bi bi-person-gear me-2 text-muted"></i> Profile
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item py-2 text-danger">
-                                        <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+
+                    <li class="nav-item d-flex align-items-center">
+                        <span class="text-secondary small me-1">Hai,</span>
+                        <span class="fw-bold text-dark me-2">{{ Auth::user()->name }}</span>
+                        
+                        @if(in_array(Auth::user()->role, ['admin', 'pemilik']))
+                            <span class="badge bg-danger rounded-pill">Pemilik</span>
+                        @else
+                            <span class="badge bg-info text-dark rounded-pill">Customer</span>
+                        @endif
                     </li>
+
+                    <!-- <li class="nav-item ms-3">
+                        <a href="{{ route('profile.edit') }}" class="btn btn-outline-secondary rounded-pill btn-sm px-3" title="Edit Profile">
+                            <i class="bi bi-person-gear"></i> Profile
+                        </a>
+                    </li> -->
+
+                    {{-- TOMBOL LOGOUT (Hitam, Terpisah) --}}
+                    <li class="nav-item ms-2">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-dark rounded-pill px-4">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+
                 @else
+                    {{-- JIKA BELUM LOGIN --}}
                     <li class="nav-item">
                         <a href="{{ route('login') }}" class="btn btn-outline-primary px-4 me-2 rounded-pill">Masuk</a>
                     </li>
