@@ -42,7 +42,8 @@
                     @endif
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-dark fw-medium" href="#" role="button" data-bs-toggle="dropdown">
-                            <span class="me-2">{{ Auth::user()->name }}</span>
+                            <span class="text-secondary small me-1">Hai,</span>
+                            <span class="me-2 fw-bold text-dark">{{ Auth::user()->name }}</span>
                             @if(in_array(Auth::user()->role, ['admin', 'pemilik']))
                                 <span class="badge bg-danger ms-1">Pemilik</span>
                             @else
